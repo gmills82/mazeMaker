@@ -15,9 +15,11 @@ public class App {
         System.out.println("Hello World!");
         Scanner scanner = new Scanner(System.in);
         System.out.println("What width maze would you like? (maze rows) ");
+        //To fit on one page don't exceed 63
         int width = scanner.nextInt();
 
         System.out.println("What height maze would you like? (maze columns) ");
+        //To fit on one page don't exceed 82
         int height = scanner.nextInt();
 
         System.out.println("Your maze will be " + width + " by " + height + ".");
