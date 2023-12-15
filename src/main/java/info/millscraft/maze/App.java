@@ -4,6 +4,7 @@ import millscraft.mazeGenerator.Grid;
 import millscraft.mazeGenerator.generator.*;
 import millscraft.mazeGenerator.render.ImageRendererImpl;
 
+import java.awt.*;
 import java.io.File;
 import java.util.Scanner;
 
@@ -14,12 +15,10 @@ public class App {
     public static void main(String[] args) {
         System.out.println("Hello World!");
         Scanner scanner = new Scanner(System.in);
-        System.out.println("What width maze would you like? (maze rows) ");
-        //To fit on one page don't exceed 63
+        System.out.println("How many columns should your maze have? ");
         int width = scanner.nextInt();
 
-        System.out.println("What height maze would you like? (maze columns) ");
-        //To fit on one page don't exceed 82
+        System.out.println("How many rows should your maze have? ");
         int height = scanner.nextInt();
 
         System.out.println("Your maze will be " + width + " by " + height + ".");
@@ -55,7 +54,13 @@ public class App {
         Grid mazeGrid = new Grid(height, width);
         Grid preparedMaze = algorithm.prepareMaze(mazeGrid);
 
-        ImageRendererImpl imageRenderer = new ImageRendererImpl();
+        System.out.println("Designing maze... ");
+        System.out.println("How thick would you like your maze cells to be? ");
+        int cellSize = scanner.nextInt();
+        System.out.println("How thick would you like each wall?");
+        int wallThickness = scanner.nextInt();
+
+        ImageRendererImpl imageRenderer = new ImageRendererImpl(cellSize, cellSize * 2, wallThickness, Color.DARK_GRAY, new Color(17, 242, 152));
 
         File mazeJpeg = imageRenderer.render(preparedMaze);
         System.out.println("Your maze is generated and located at: " + mazeJpeg.getAbsolutePath());
