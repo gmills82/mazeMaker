@@ -1,5 +1,6 @@
 package info.millscraft.maze;
 
+import millscraft.mazeGenerator.Direction;
 import millscraft.mazeGenerator.Grid;
 import millscraft.mazeGenerator.generator.*;
 import millscraft.mazeGenerator.render.ImageRendererImpl;
@@ -50,6 +51,33 @@ public class App {
         }
 
         System.out.println("You have selected the algorithm " + algorithm.getClass().getSimpleName() + ".");
+
+        System.out.println("Which side would you like the start of the maze on?");
+        System.out.println("\t 1 - North (default)");
+        System.out.println("\t 2 - East");
+        System.out.println("\t 3 - South");
+        System.out.println("\t 4 - West");
+        int startSide = scanner.nextInt();
+        Direction startDirection = Direction.NORTH;
+        for (Direction direction : Direction.values()) {
+            if (direction.getDirectionNumber() == startSide) {
+                startDirection = direction;
+            }
+        }
+
+        System.out.println("Which side would you like the end of the maze on?");
+        System.out.println("\t 1 - North");
+        System.out.println("\t 2 - East");
+        System.out.println("\t 3 - South (default)");
+        System.out.println("\t 4 - West");
+        int endSide = scanner.nextInt();
+        Direction endDirection = Direction.SOUTH;
+        for (Direction direction : Direction.values()) {
+            if (direction.getDirectionNumber() == endSide) {
+                endDirection = direction;
+            }
+        }
+
         System.out.println("Generating maze now...");
         Grid mazeGrid = new Grid(height, width);
         Grid preparedMaze = algorithm.prepareMaze(mazeGrid);
@@ -62,7 +90,7 @@ public class App {
 
         ImageRendererImpl imageRenderer = new ImageRendererImpl(cellSize, cellSize * 2, wallThickness, Color.DARK_GRAY, new Color(17, 242, 152));
 
-        File mazeJpeg = imageRenderer.render(preparedMaze);
+        File mazeJpeg = imageRenderer.render(preparedMaze, startDirection, endDirection);
         System.out.println("Your maze is generated and located at: " + mazeJpeg.getAbsolutePath());
 
     }
